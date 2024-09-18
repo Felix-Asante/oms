@@ -6,9 +6,9 @@ import { users } from 'src/users/schema/user.schema';
 export const Organization = pgTable('organizations', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').unique().notNull(),
-  logo: text('logo').notNull(),
-  phone: text('phone').notNull(),
-  email: text('email').notNull(),
+  logo: text('logo'),
+  phone: text('phone'),
+  email: text('email'),
   website: text('website'),
   created_at: timestamp('created_at').defaultNow().notNull(),
   updated_at: timestamp('updated_at').defaultNow().notNull(),

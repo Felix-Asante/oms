@@ -8,7 +8,7 @@ import {
 } from 'drizzle-orm/pg-core';
 import { LoginMethods } from 'src/common/enums/auth.enum';
 
-const LoginMethodEnum = pgEnum('login_method', [
+export const LoginMethodEnum = pgEnum('login_methods', [
   LoginMethods.emailPassword,
   LoginMethods.social,
 ]);
@@ -21,7 +21,7 @@ export const users = pgTable('users', {
   last_name: text('last_name').notNull(),
   photo: text('photo'),
   social_id: varchar('social_id', { length: 20 }),
-  login_method: LoginMethodEnum('login_method').default(
+  login_method: LoginMethodEnum('login_methods').default(
     LoginMethods.emailPassword,
   ),
   date_of_birth: timestamp('date_of_birth'),
