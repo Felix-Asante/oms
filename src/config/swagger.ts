@@ -19,10 +19,7 @@ export default async function setupSwagger(
 
   const swaggerConfig: SwaggerConfig = {
     name: 'Oganization Management System API Documentation',
-    description: configService.get<string>(
-      'doc.description',
-      'API Description',
-    ),
+    description: 'API Description',
     version,
     prefix: `${prefix}/v${version}/docs`,
   };
@@ -65,7 +62,6 @@ export default async function setupSwagger(
     swaggerOptions: {
       docExpansion: 'none',
       persistAuthorization: true,
-      displayOperationId: true,
       operationsSorter: 'method',
       tagsSorter: 'alpha',
       tryItOutEnabled: true,
