@@ -14,7 +14,7 @@ import { HTTP_ERROR_CODE } from 'src/constants/errors.constants';
 export class UsersService {
   constructor(@Inject(DRIZZLE) private readonly db: DrizzleDB) {}
 
-  async findUserById(id: string) {
+  async findUserById(id: string, removePassword = true) {
     try {
       const user = await this.db.select().from(users).where(eq(users.id, id));
       if (user.length === 0) {
@@ -23,13 +23,17 @@ export class UsersService {
           code: HTTP_ERROR_CODE.NOT_FOUND,
         });
       }
+
+      if (removePassword) {
+        delete user[0].password;
+      }
       return user[0];
     } catch (error) {
       throw error;
     }
   }
 
-  async findUserByEmail(email: string) {
+  async findUserByEmail(email: string, removePassword = true) {
     try {
       const user = await this.db
         .select()
@@ -41,6 +45,10 @@ export class UsersService {
           message: `User with email ${email} not found`,
           code: HTTP_ERROR_CODE.NOT_FOUND,
         });
+      }
+
+      if (removePassword) {
+        delete user[0].password;
       }
       return user[0];
     } catch (error) {

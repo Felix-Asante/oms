@@ -6,6 +6,7 @@ import jwtConfig from 'src/config/jwt.config';
 import { ConfigModule } from '@nestjs/config';
 import { jwtStrategy } from './strategies/jwt.strategy';
 import { UsersModule } from 'src/users/users.module';
+import { DrizzleModule } from 'src/drizzle/drizzle.module';
 
 @Module({
   controllers: [AuthController],
@@ -14,6 +15,7 @@ import { UsersModule } from 'src/users/users.module';
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig), // partial registration of jwtConfig. accessible only in this module
     UsersModule,
+    DrizzleModule,
   ],
 })
 export class AuthModule {}
