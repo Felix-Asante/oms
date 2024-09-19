@@ -34,6 +34,17 @@ export class UsersController {
   @ApiNotFoundResponse()
   @ApiBadRequestResponse()
   @ApiInternalServerErrorResponse()
+  @Get('me')
+  async findCurrentUser(@CurrentUser() user: User) {
+    return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse()
+  @ApiNotFoundResponse()
+  @ApiBadRequestResponse()
+  @ApiInternalServerErrorResponse()
   @Get(':id')
   async findUserById(@Param('id', ParseUUIDPipe) id: string) {
     return await this.usersService.findUserById(id);
