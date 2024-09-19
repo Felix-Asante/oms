@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"login_methods" "login_methods" DEFAULT 'email/password',
 	"date_of_birth" timestamp,
 	"city" text,
+	"country" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "users_email_unique" UNIQUE("email")

@@ -26,7 +26,7 @@ export const users = pgTable('users', {
   ),
   date_of_birth: timestamp('date_of_birth'),
   city: text('city'),
-  country: text('city'),
+  country: text('country'),
   created_at: timestamp('created_at').defaultNow().notNull(),
   updated_at: timestamp('updated_at').defaultNow().notNull(),
 });

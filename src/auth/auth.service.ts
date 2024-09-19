@@ -7,7 +7,6 @@ import {
 import { HTTP_ERROR_CODE } from 'src/constants/errors.constants';
 import { DRIZZLE } from 'src/drizzle/drizzle.module';
 import { DrizzleDB } from 'src/drizzle/types/drizzle';
-import { users } from 'src/users/schema/user.schema';
 import { UsersService } from 'src/users/users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { SigninDto } from './dtos/sigin.dto';
@@ -44,20 +43,13 @@ export class AuthService {
 
   async createUser(payload: CreateUserDto) {
     try {
-      const { email, password, first_name, last_name } = payload;
-      await this.userService.findUserByEmail(email, false);
+      const { password, ...data } = payload;
       const hashedPassword = await createHashedString(password);
 
-      const [newUser] = await this.db
-        .insert(users)
-        .values({
-          email,
-          password: hashedPassword,
-          first_name,
-          last_name,
-        })
-        .returning();
-
+      const newUser = await this.userService.createUser({
+        password: hashedPassword,
+        ...data,
+      });
       return {
         user: newUser,
         token: this.createJwtToken({

@@ -28,28 +28,18 @@ export default async function setupSwagger(
     .setTitle(swaggerConfig.name)
     .setDescription(swaggerConfig.description)
     .setVersion(swaggerConfig.version)
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        name: 'accessToken',
-        description: 'Enter your access token',
-        in: 'header',
-      },
-      'accessToken',
-    )
-    .addBearerAuth(
-      {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-        name: 'refreshToken',
-        description: 'Enter your refresh token',
-        in: 'header',
-      },
-      'refreshToken',
-    )
+    .addBearerAuth()
+    // .addBearerAuth(
+    //   {
+    //     type: 'http',
+    //     scheme: 'bearer',
+    //     bearerFormat: 'JWT',
+    //     name: 'refreshToken',
+    //     description: 'Enter your refresh token',
+    //     in: 'header',
+    //   },
+    //   'refreshToken',
+    // )
     .build();
 
   const document = SwaggerModule.createDocument(app as any, documentBuild, {
@@ -57,7 +47,6 @@ export default async function setupSwagger(
   });
 
   SwaggerModule.setup(swaggerConfig.prefix, app as any, document, {
-    explorer: true,
     customSiteTitle: swaggerConfig.name,
     swaggerOptions: {
       docExpansion: 'none',

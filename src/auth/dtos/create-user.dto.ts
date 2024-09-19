@@ -17,4 +17,8 @@ export class CreateUserDto {
   @ApiProperty()
   @IsString()
   last_name: string;
+
+  @ApiProperty()
+  @IsString()
+  organization_code: string;
 }
