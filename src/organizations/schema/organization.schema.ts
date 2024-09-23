@@ -1,5 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { generateRandomString } from 'src/common/helpers/index.helper';
 import { Roles } from 'src/users/schema/roles.schema';
 import { users } from 'src/users/schema/user.schema';
 
@@ -13,6 +14,7 @@ export const Organization = pgTable('organizations', {
   code: varchar('code', { length: 8 })
     .notNull()
     .$defaultFn(() => generateRandomString(8)),
+  slug: text('slug').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull(),
   updated_at: timestamp('updated_at').defaultNow().notNull(),
 });
