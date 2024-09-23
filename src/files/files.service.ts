@@ -54,7 +54,7 @@ export class FilesService {
     }
   }
 
-  async getFileSignedUrl(key: string, options: GetFileOptions) {
+  async getFileSignedUrl(key: string, options?: GetFileOptions) {
     try {
       const url = await getSignedUrl(
         this.s3Client,
