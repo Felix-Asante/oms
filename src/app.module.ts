@@ -6,6 +6,7 @@ import { DrizzleModule } from './drizzle/drizzle.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
     UsersModule,
     AuthModule,
     OrganizationsModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
