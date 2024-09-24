@@ -15,10 +15,15 @@ import { User } from 'src/users/types/users';
 import { Roles } from 'src/common/enums/auth.enum';
 import { Roles as RolesSchema } from 'src/users/schema/roles.schema';
 import { generateRandomString, slugify } from 'src/common/helpers/index.helper';
+import { FilesService } from 'src/files/files.service';
+import { ASSETS_FOLDER } from 'src/common/enums/files.enum';
 
 @Injectable()
 export class OrganizationsService {
-  constructor(@Inject(DRIZZLE) private readonly db: DrizzleDB) {}
+  constructor(
+    @Inject(DRIZZLE) private readonly db: DrizzleDB,
+    private readonly fileService: FilesService,
+  ) {}
 
   async findOrganizationById(id: string) {
     try {
@@ -32,7 +37,9 @@ export class OrganizationsService {
           code: HTTP_ERROR_CODE.NOT_FOUND,
         });
       }
-      return organization;
+      return await this.fileService.attachSignedUrl(organization, {
+        logo: ASSETS_FOLDER.IDENTITY_PHOTOS,
+      });
     } catch (error) {
       throw error;
     }
@@ -50,7 +57,9 @@ export class OrganizationsService {
           code: HTTP_ERROR_CODE.NOT_FOUND,
         });
       }
-      return organization;
+      return await this.fileService.attachSignedUrl(organization, {
+        logo: ASSETS_FOLDER.IDENTITY_PHOTOS,
+      });
     } catch (error) {
       throw error;
     }
@@ -58,12 +67,11 @@ export class OrganizationsService {
 
   async createOrganization(data: CreateOrganizationDto) {
     try {
-      const { logo, ...payload } = data;
-      const slug = `${slugify(payload.name)}-${generateRandomString(4)}`;
-      // upload logo
+      const slug = `${slugify(data.name)}-${generateRandomString(4)}`;
+
       const [newOrganization] = await this.db
         .insert(Organization)
-        .values({ ...payload, slug })
+        .values({ ...data, slug })
         .returning();
       return newOrganization;
     } catch (error) {

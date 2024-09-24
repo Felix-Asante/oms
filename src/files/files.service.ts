@@ -47,7 +47,7 @@ export class FilesService {
           expiresIn: 60 * 30, // expires in 30 min
         },
       );
-      return url;
+      return { url, key };
     } catch (error) {
       console.log(error);
       throw error;
@@ -73,7 +73,7 @@ export class FilesService {
     fields: {
       [P in keyof T]?: P extends 'toString' ? unknown : ASSETS_FOLDER;
     },
-    options: GetFileOptions,
+    options?: GetFileOptions,
   ) => {
     try {
       const { expiresIn = 60 * 30 } = options;
